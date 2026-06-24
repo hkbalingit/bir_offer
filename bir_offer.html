@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0d2155">
+<title>BIR Offer — Kim Balingit, CPA</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background: #f0f2f5;
+    color: #1a1a2e;
+    line-height: 1.6;
+    font-size: 15px;
+    padding-bottom: 90px; /* space for sticky CTA */
+  }
+
+  /* ── STICKY TOP BAR ── */
+  .top-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: #0d2155;
+    padding: 10px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .top-name { font-size: 13px; font-weight: 700; color: #e8f1fb; }
+  .top-creds { font-size: 10px; color: #5DCAA5; }
+  .top-slots { background: #c5a800; border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 700; color: #1e1800; white-space: nowrap; }
+
+  .tri-rule { display: flex; height: 4px; }
+  .tr-n { flex: 1; background: #1B3A7A; }
+  .tr-t { flex: 1; background: #1D9E75; }
+  .tr-g { flex: 1; background: #c5a800; }
+
+  /* ── PAGE SECTIONS ── */
+  .section { padding: 20px 16px; }
+  .section.dark { background: #0d2155; }
+  .section.light { background: #fff; }
+  .section.muted { background: #f8f9fb; }
+
+  hr.div { border: none; border-top: 0.5px solid #e0e3e8; }
+
+  /* ── SLOTS HERO ── */
+  .slots-hero { background: #0d2155; padding: 24px 16px 20px; }
+  .slots-pill { display: inline-flex; align-items: center; gap: 8px; background: #c5a800; border-radius: 20px; padding: 6px 14px; margin-bottom: 16px; }
+  .slots-pill-num { font-size: 20px; font-weight: 800; color: #1e1800; line-height: 1; }
+  .slots-pill-text { font-size: 11px; font-weight: 700; color: #3d2e00; text-transform: uppercase; letter-spacing: 0.04em; }
+  .slots-pips { display: flex; gap: 6px; margin-bottom: 16px; }
+  .pip { width: 36px; height: 7px; border-radius: 4px; background: #1D9E75; }
+  .pip.taken { background: #2a3d6b; }
+
+  .eyebrow { font-size: 11px; font-weight: 600; color: #5DCAA5; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 6px; }
+  h1 { font-size: 28px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 10px; }
+  h1 em { color: #c5a800; font-style: normal; }
+  .hero-sub { font-size: 14px; color: #85B7EB; line-height: 1.7; }
+
+  /* ── DEADLINE BANNER ── */
+  .deadline { background: #FFF8D6; border-left: 4px solid #c5a800; padding: 14px 16px; }
+  .deadline p { font-size: 13px; color: #5a4700; line-height: 1.6; }
+
+  /* ── SECTION LABEL ── */
+  .sec-label { font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: #aaa; margin-bottom: 14px; }
+
+  /* ── SERVICE CARDS (stacked) ── */
+  .svc-stack { display: flex; flex-direction: column; gap: 10px; margin-bottom: 4px; }
+  .svc-card { border-radius: 12px; padding: 16px; display: flex; align-items: flex-start; gap: 14px; }
+  .svc-card.cn { background: #1B3A7A; }
+  .svc-card.ct { background: #1D9E75; }
+  .svc-card.cg { background: #c5a800; }
+  .svc-icon { font-size: 24px; flex-shrink: 0; margin-top: 1px; }
+  .svc-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+  .cn .svc-title { color: #e8f1fb; }
+  .ct .svc-title { color: #E1F5EE; }
+  .cg .svc-title { color: #1e1800; }
+  .svc-desc { font-size: 12px; line-height: 1.5; }
+  .cn .svc-desc { color: #85B7EB; }
+  .ct .svc-desc { color: #9FE1CB; }
+  .cg .svc-desc { color: #3d2e00; }
+
+  /* ── WHO ── */
+  .who-stack { display: flex; flex-direction: column; gap: 10px; }
+  .who-row { display: flex; align-items: flex-start; gap: 12px; background: #fff; border: 0.5px solid #dde1e7; border-radius: 12px; padding: 14px; }
+  .who-emoji { font-size: 22px; flex-shrink: 0; }
+  .who-title { font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 3px; }
+  .who-desc { font-size: 13px; color: #666; line-height: 1.5; }
+
+  /* ── ABATEMENT ── */
+  .abate-box { background: #f8f9fb; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+  .abate-title { font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
+  .pill-wrap { display: flex; flex-wrap: wrap; gap: 7px; }
+  .pill { font-size: 12px; padding: 6px 12px; border-radius: 20px; }
+  .p-n { background: #e8f1fb; color: #1B3A7A; }
+  .p-t { background: #E1F5EE; color: #085041; }
+  .p-g { background: #FFF8D6; color: #7a6200; }
+
+  /* ── INFO / WARN BOXES ── */
+  .info-box { background: #E1F5EE; border-left: 4px solid #1D9E75; border-radius: 0 10px 10px 0; padding: 14px 16px; margin-bottom: 14px; }
+  .info-box p { font-size: 13px; color: #085041; line-height: 1.6; }
+  .warn-box { background: #FFF8D6; border-left: 4px solid #c5a800; border-radius: 0 10px 10px 0; padding: 14px 16px; margin-bottom: 14px; }
+  .warn-box p { font-size: 13px; color: #5a4700; line-height: 1.6; }
+  .warn-label { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #7a6200; display: block; margin-bottom: 4px; }
+  .red-box { background: #FCEBEB; border-left: 4px solid #E24B4A; border-radius: 0 10px 10px 0; padding: 14px 16px; margin-bottom: 14px; }
+  .red-box p { font-size: 13px; color: #791F1F; line-height: 1.6; }
+  .red-label { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #A32D2D; display: block; margin-bottom: 4px; }
+
+  /* ── CHECKLIST ── */
+  .ck-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .ck-list li { display: flex; gap: 10px; font-size: 14px; color: #555; line-height: 1.5; }
+  .ck-n { color: #1B3A7A; font-weight: 700; flex-shrink: 0; font-size: 16px; }
+  .ck-t { color: #1D9E75; font-weight: 700; flex-shrink: 0; font-size: 16px; }
+  .ck-g { color: #c5a800; font-weight: 700; flex-shrink: 0; font-size: 16px; }
+
+  /* ── PACKAGES ── */
+  .pkg { border: 0.5px solid #dde1e7; border-radius: 14px; overflow: hidden; margin-bottom: 14px; }
+  .pkg-head { padding: 16px 16px 12px; }
+  .pkg-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .pkg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot-n { background: #1B3A7A; }
+  .dot-t { background: #1D9E75; }
+  .pkg-badge { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 6px; }
+  .badge-n { background: #e8f1fb; color: #1B3A7A; }
+  .badge-t { background: #E1F5EE; color: #085041; }
+  .pkg-name { font-size: 17px; font-weight: 700; color: #0d2155; margin-bottom: 2px; }
+  .pkg-tagline { font-size: 13px; color: #888; }
+  .tier-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-top: 0.5px solid #f0f1f3; }
+  .tier-row:first-child { border-top: 0.5px solid #e0e3e8; background: #f8f9fb; }
+  .tier-name { font-size: 14px; font-weight: 700; color: #1a1a2e; }
+  .tier-desc { font-size: 12px; color: #888; margin-top: 2px; }
+  .tier-price { font-size: 18px; font-weight: 800; color: #1B3A7A; }
+  .pkg-incl { padding: 12px 16px; background: #f8f9fb; }
+  .pkg-incl-title { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .pkg-incl-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .pkg-incl-list li { display: flex; gap: 8px; font-size: 13px; color: #555; }
+  .li-n { color: #1B3A7A; font-weight: 700; flex-shrink: 0; }
+  .li-t { color: #1D9E75; font-weight: 700; flex-shrink: 0; }
+
+  /* ── MULTI-YEAR ── */
+  .myr-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; border: 0.5px solid #dde1e7; margin-bottom: 8px; }
+  .myr-table th { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #fff; background: #1B3A7A; padding: 10px 14px; text-align: left; }
+  .myr-table th.r { text-align: right; }
+  .myr-table td { padding: 11px 14px; border-bottom: 0.5px solid #f0f1f3; font-size: 14px; color: #444; }
+  .myr-table td.r { text-align: right; }
+  .myr-table tr:last-child td { border-bottom: none; }
+  .myr-table tr:nth-child(even) td { background: #f8f9fb; }
+  .yr-label { font-weight: 700; color: #0d2155; }
+  .yr-orig { color: #aaa; text-decoration: line-through; font-size: 12px; }
+  .yr-disc { font-weight: 700; color: #1D9E75; }
+  .yr-save { display: inline-block; font-size: 11px; font-weight: 700; background: #E1F5EE; color: #085041; padding: 2px 8px; border-radius: 10px; }
+
+  /* ── BUNDLES ── */
+  .bundle { border: 0.5px solid #dde1e7; border-radius: 14px; overflow: hidden; margin-bottom: 14px; position: relative; }
+  .slot-ribbon { position: absolute; top: 12px; right: 12px; font-size: 10px; font-weight: 700; background: #FCEBEB; color: #A32D2D; padding: 3px 9px; border-radius: 20px; }
+  .bun-head { padding: 16px 16px 0; }
+  .bun-badge-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .disc-badge { font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
+  .db-gold { background: #c5a800; color: #1e1800; }
+  .db-teal { background: #1D9E75; color: #E1F5EE; }
+  .db-navy { background: #1B3A7A; color: #e8f1fb; }
+  .db-coral { background: #993C1D; color: #FAECE7; }
+  .bun-name { font-size: 16px; font-weight: 700; color: #0d2155; margin-bottom: 4px; }
+  .bun-tagline { font-size: 13px; color: #888; margin-bottom: 12px; line-height: 1.5; }
+  .bun-body { padding: 0 16px 12px; }
+  .bun-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .bun-list li { display: flex; gap: 8px; font-size: 13px; color: #555; line-height: 1.5; }
+  .bun-pricing { background: #f8f9fb; border-top: 0.5px solid #e0e3e8; padding: 12px 16px; }
+  .bp-row { display: flex; justify-content: space-between; font-size: 13px; color: #666; padding: 3px 0; }
+  .bp-row.tot { font-weight: 700; color: #0d2155; font-size: 14px; border-top: 0.5px solid #dde1e7; margin-top: 5px; padding-top: 8px; }
+  .bp-disc { color: #1D9E75; font-weight: 700; }
+  .bun-cond { font-size: 11px; color: #7a6200; font-weight: 700; margin-top: 8px; display: block; }
+
+  /* ── SCARCITY ── */
+  .scarcity { background: #FCEBEB; border: 0.5px solid #F7C1C1; border-radius: 12px; padding: 14px 16px; }
+  .scarcity p { font-size: 13px; color: #791F1F; line-height: 1.6; }
+
+  /* ── STEPS ── */
+  .steps { display: flex; flex-direction: column; gap: 0; border-radius: 12px; overflow: hidden; }
+  .step { padding: 16px; }
+  .sn { background: #1B3A7A; }
+  .st { background: #1D9E75; }
+  .sg { background: #c5a800; }
+  .step-num { font-size: 10px; font-weight: 700; margin-bottom: 4px; }
+  .sn .step-num { color: #85B7EB; }
+  .st .step-num { color: #9FE1CB; }
+  .sg .step-num { color: #3d2e00; }
+  .step-label { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+  .sn .step-label { color: #e8f1fb; }
+  .st .step-label { color: #E1F5EE; }
+  .sg .step-label { color: #1e1800; }
+  .step-detail { font-size: 12px; line-height: 1.5; }
+  .sn .step-detail { color: #85B7EB; }
+  .st .step-detail { color: #9FE1CB; }
+  .sg .step-detail { color: #3d2e00; }
+
+  /* ── INLINE CTA (mid-page) ── */
+  .inline-cta { background: #0d2155; border-radius: 14px; padding: 20px 16px; text-align: center; }
+  .inline-cta-title { font-size: 18px; font-weight: 700; color: #e8f1fb; margin-bottom: 6px; }
+  .inline-cta-sub { font-size: 13px; color: #85B7EB; line-height: 1.65; margin-bottom: 12px; }
+  .slot-counter { display: inline-block; font-size: 12px; font-weight: 700; background: #c5a800; color: #1e1800; padding: 5px 16px; border-radius: 20px; margin-bottom: 14px; }
+  .cta-btn-stack { display: flex; flex-direction: column; gap: 10px; }
+  .cta-btn { display: block; font-size: 15px; font-weight: 700; padding: 14px 20px; border-radius: 10px; border: none; cursor: pointer; text-decoration: none; text-align: center; }
+  .btn-lt { background: #e8f1fb; color: #1B3A7A; }
+  .btn-t  { background: #1D9E75; color: #fff; }
+  .btn-g  { background: #c5a800; color: #1e1800; }
+
+  /* ── STICKY BOTTOM CTA ── */
+  .sticky-cta {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+    background: #0d2155;
+    border-top: 1px solid #1B3A7A;
+    padding: 12px 16px;
+    display: flex; gap: 10px; align-items: center;
+  }
+  .sticky-slots { font-size: 11px; color: #85B7EB; flex-shrink: 0; line-height: 1.3; }
+  .sticky-slots strong { color: #c5a800; display: block; font-size: 13px; }
+  .sticky-btn { flex: 1; background: #1D9E75; color: #fff; font-size: 14px; font-weight: 700; padding: 12px; border-radius: 10px; border: none; cursor: pointer; text-decoration: none; text-align: center; display: block; }
+
+  /* ── FOOTNOTE ── */
+  .footnote { font-size: 11px; color: #bbb; line-height: 1.8; }
+  .fn-b { font-weight: 700; color: #999; }
+</style>
+</head>
+<body>
+
+<!-- STICKY TOP BAR -->
+<div class="top-bar">
+  <div>
+    <div class="top-name">Kim Balingit, CPA</div>
+    <div class="top-creds">PRC-Licensed · BIR-Accredited Tax Practitioner</div>
+  </div>
+  <span class="top-slots">🔴 5 slots left</span>
+</div>
+<div class="tri-rule"><span class="tr-n"></span><span class="tr-t"></span><span class="tr-g"></span></div>
+
+<!-- HERO -->
+<div class="slots-hero">
+  <div class="slots-pill">
+    <span class="slots-pill-num">5</span>
+    <span class="slots-pill-text">Launch slots only</span>
+  </div>
+  <div class="slots-pips">
+    <div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div>
+  </div>
+  <p class="eyebrow">Limited offer · RR 4-2026 &amp; RMC 47-2026</p>
+  <h1>Your BIR penalties<br>can be <em>reduced</em><br>or waived.</h1>
+  <p class="hero-sub" style="margin-top:10px;">Under RR No. 4-2026 and Section 204 of the NIRC, surcharges, interest, and compromise penalties may be abated. Closing your business? RMC 47-2026 makes it faster — and stops penalties from accruing.</p>
+</div>
+
+<div class="deadline">
+  <p>⏰ &nbsp;<strong>Abatement programs have filing windows.</strong> The longer penalties accrue, the more you owe. Act now while the window under RR 4-2026 is open.</p>
+</div>
+
+<!-- SERVICES -->
+<div class="section light">
+  <p class="sec-label">Three services</p>
+  <div class="svc-stack">
+    <div class="svc-card cn"><div class="svc-icon">✓</div><div><div class="svc-title">Penalty abatement</div><div class="svc-desc">Reduce or waive surcharges, delinquency interest, and compromise penalties under RR 4-2026.</div></div></div>
+    <div class="svc-card ct"><div class="svc-icon">→</div><div><div class="svc-title">Business closure</div><div class="svc-desc">Full deregistration under RMC 47-2026 — stop penalties and close your business properly.</div></div></div>
+    <div class="svc-card cg"><div class="svc-icon">★</div><div><div class="svc-title">Tax clearance</div><div class="svc-desc">RDO follow-through until your registration is fully deregistered and cleared.</div></div></div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- WHO -->
+<div class="section light">
+  <p class="sec-label">Who this is for</p>
+  <div class="who-stack">
+    <div class="who-row"><div class="who-emoji">🏪</div><div><div class="who-title">Inactive businesses</div><div class="who-desc">Stopped operations but BIR registration is still open — penalties keep accruing every month.</div></div></div>
+    <div class="who-row"><div class="who-emoji">📋</div><div><div class="who-title">Open BIR cases</div><div class="who-desc">Unresolved assessments, late returns, or past deficiencies still on your record.</div></div></div>
+    <div class="who-row"><div class="who-emoji">🚪</div><div><div class="who-title">Business owners closing</div><div class="who-desc">Planning to retire, dissolve, or permanently cease — proper closure protects your TIN.</div></div></div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ABATEMENT COVERAGE -->
+<div class="section muted">
+  <p class="sec-label">What abatement covers</p>
+  <div class="abate-box">
+    <p class="abate-title">✓ &nbsp;Penalties that may be reduced or waived</p>
+    <div class="pill-wrap">
+      <span class="pill p-n">25% surcharge on tax due</span>
+      <span class="pill p-t">12% per annum delinquency interest</span>
+      <span class="pill p-g">Compromise penalties ₱200–₱50,000</span>
+      <span class="pill p-n">Prior unfiled returns (qualifying circumstances)</span>
+      <span class="pill p-t">Open BIR cases under amnesty window</span>
+    </div>
+  </div>
+  <div class="info-box"><p>ℹ &nbsp;Basic tax due is <strong>not abatable</strong> — only surcharges, interest, and compromise penalties may be cancelled. Abatement is approved by the Commissioner of Internal Revenue.</p></div>
+</div>
+
+<hr class="div">
+
+<!-- CLOSURE CHECKLIST -->
+<div class="section light">
+  <p class="sec-label">What RMC 47-2026 gives you</p>
+  <ul class="ck-list">
+    <li><span class="ck-n">✓</span>Penalties for non-filing stop upon submission of complete closure requirements</li>
+    <li><span class="ck-t">✓</span>Registration tagged "deregistered" — no more open cases generated</li>
+    <li><span class="ck-g">✓</span>Standardized document list — no catch-all requirements</li>
+    <li><span class="ck-n">✓</span>File manually at RDO or electronically</li>
+    <li><span class="ck-t">✓</span>Micro taxpayers: no mandatory audit upon closure</li>
+    <li><span class="ck-g">✓</span>Micro taxpayers (≤₱3M sales / ≤₱8M assets): expedited tax clearance*</li>
+  </ul>
+  <div class="warn-box" style="margin-top:14px;"><p><span class="warn-label">⚠ Note on processing timelines</span>The 3-working-day clearance is RMC 47-2026's target — not a guaranteed turnaround. Actual time depends on your RDO, completeness of documents, and application volume.</p></div>
+</div>
+
+<hr class="div">
+
+<!-- PACKAGES -->
+<div class="section muted">
+  <p class="sec-label">Launch professional fees</p>
+
+  <!-- PKG 1 -->
+  <div class="pkg">
+    <div class="pkg-head">
+      <div class="pkg-top"><div class="pkg-dot dot-n"></div><span class="pkg-badge badge-n">Abatement only</span></div>
+      <div class="pkg-name">Penalty Relief Package</div>
+      <div class="pkg-tagline">For taxpayers with open penalties or past deficiencies</div>
+    </div>
+    <div class="tier-row">
+      <div><div class="tier-name">Simple</div><div class="tier-desc">Late filing/payment · 1–3 tax types</div></div>
+      <div class="tier-price">₱9,000</div>
+    </div>
+    <div class="tier-row">
+      <div><div class="tier-name">Moderate</div><div class="tier-desc">Mix of penalties · some open assessments</div></div>
+      <div class="tier-price">₱16,000</div>
+    </div>
+    <div class="pkg-incl">
+      <div class="pkg-incl-title">Includes</div>
+      <ul class="pkg-incl-list">
+        <li><span class="li-n">✓</span>BIR records review and open case mapping</li>
+        <li><span class="li-n">✓</span>Abatable penalty computation</li>
+        <li><span class="li-n">✓</span>BIR Form 2110 and documentary package</li>
+        <li><span class="li-n">✓</span>RDO follow-up coordination</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PKG 2 -->
+  <div class="pkg">
+    <div class="pkg-head">
+      <div class="pkg-top"><div class="pkg-dot dot-t"></div><span class="pkg-badge badge-t">Closure + abatement</span></div>
+      <div class="pkg-name">Clean Close Package</div>
+      <div class="pkg-tagline">Full end-to-end business deregistration</div>
+    </div>
+    <div class="tier-row">
+      <div><div class="tier-name">Simple</div><div class="tier-desc">Micro / sole prop · minimal open cases</div></div>
+      <div class="tier-price">₱16,000</div>
+    </div>
+    <div class="tier-row">
+      <div><div class="tier-name">Moderate</div><div class="tier-desc">Small corporation · mix of penalties + docs</div></div>
+      <div class="tier-price">₱27,000</div>
+    </div>
+    <div class="pkg-incl">
+      <div class="pkg-incl-title">Includes</div>
+      <ul class="pkg-incl-list">
+        <li><span class="li-t">✓</span>Everything in Penalty Relief</li>
+        <li><span class="li-t">✓</span>BIR Form 1905 and all closure documents</li>
+        <li><span class="li-t">✓</span>Final / short-period return filings</li>
+        <li><span class="li-t">✓</span>Surrender of COR, ATP, and BIR permits</li>
+        <li><span class="li-t">✓</span>Tax clearance follow-through</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <p><span class="warn-label">📦 What's included in the fee</span>Transportation expenses to the RDO and notarial fees are included at no extra charge.</p>
+  </div>
+  <div class="red-box">
+    <p><span class="red-label">⚠ Not included — client's responsibility</span>All BIR taxes, penalties, surcharges, and interest due remain the client's sole obligation, payable directly to the BIR.</p>
+  </div>
+  <div class="info-box"><p>💳 &nbsp;<strong>Payment terms:</strong> Full payment required upon availment to reserve your slot. No slot is secured until payment is received.</p></div>
+</div>
+
+<hr class="div">
+
+<!-- MULTI-YEAR -->
+<div class="section light">
+  <p class="sec-label">Multi-year surcharge</p>
+  <p style="font-size:13px;color:#555;line-height:1.65;margin-bottom:14px;">Each additional year beyond the first adds ₱8,000 to the base fee. Cases covering multiple years involve more returns, computations, and RDO coordination.</p>
+  <table class="myr-table">
+    <thead><tr><th>Years</th><th>PKG 1 Moderate</th><th class="r">With 20% off</th><th class="r">Save</th></tr></thead>
+    <tbody>
+      <tr><td><span class="yr-label">1 yr</span></td><td>₱16,000</td><td class="r yr-disc">₱12,800</td><td class="r"><span class="yr-save">₱3,200</span></td></tr>
+      <tr><td><span class="yr-label">2 yrs</span></td><td><span class="yr-orig">₱24,000</span></td><td class="r yr-disc">₱19,200</td><td class="r"><span class="yr-save">₱4,800</span></td></tr>
+      <tr><td><span class="yr-label">3 yrs</span></td><td><span class="yr-orig">₱32,000</span></td><td class="r yr-disc">₱25,600</td><td class="r"><span class="yr-save">₱6,400</span></td></tr>
+      <tr><td><span class="yr-label">4 yrs</span></td><td><span class="yr-orig">₱40,000</span></td><td class="r yr-disc">₱32,000</td><td class="r"><span class="yr-save">₱8,000</span></td></tr>
+      <tr><td colspan="4" style="font-size:12px;color:#888;">5+ years — custom quote, contact me directly</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<hr class="div">
+
+<!-- BUNDLES -->
+<div class="section muted">
+  <p class="sec-label">Launch offer bundles — first 5 slots only</p>
+
+  <div class="bundle">
+    <span class="slot-ribbon">1 slot</span>
+    <div class="bun-head">
+      <div class="bun-badge-row"><span class="disc-badge db-gold">10% off</span><span style="font-size:11px;font-weight:700;color:#7a6200;">⏰ Act fast</span></div>
+      <p class="bun-name">Early Bird</p>
+      <p class="bun-tagline">Engage within 7 days of your free assessment and lock in 10% off any package.</p>
+    </div>
+    <div class="bun-body">
+      <ul class="bun-list">
+        <li><span class="ck-g">✓</span>Any single package · no minimum fee</li>
+        <li><span class="ck-g">✓</span>Cannot be combined with other bundles</li>
+      </ul>
+    </div>
+    <div class="bun-pricing">
+      <div class="bp-row"><span>PKG 1 Simple (₱9,000)</span><span class="bp-disc">→ ₱8,100</span></div>
+      <div class="bp-row"><span>PKG 1 Moderate (₱16,000)</span><span class="bp-disc">→ ₱14,400</span></div>
+      <div class="bp-row"><span>PKG 2 Simple (₱16,000)</span><span class="bp-disc">→ ₱14,400</span></div>
+      <div class="bp-row"><span>PKG 2 Moderate (₱27,000)</span><span class="bp-disc">→ ₱24,300</span></div>
+      <span class="bun-cond">⚠ Must engage within 7 days of assessment</span>
+    </div>
+  </div>
+
+  <div class="bundle">
+    <span class="slot-ribbon">1 slot</span>
+    <div class="bun-head">
+      <div class="bun-badge-row"><span class="disc-badge db-teal">15% off</span><span style="font-size:11px;font-weight:700;color:#085041;">★ Best value</span></div>
+      <p class="bun-name">All-in Package</p>
+      <p class="bun-tagline">Abatement + full closure in one engagement. One fee, full resolution.</p>
+    </div>
+    <div class="bun-body">
+      <ul class="bun-list">
+        <li><span class="ck-t">✓</span>PKG 1 + PKG 2 together · 15% off total</li>
+        <li><span class="ck-t">✓</span>Can be combined with Multi-Year Deal</li>
+      </ul>
+    </div>
+    <div class="bun-pricing">
+      <div class="bp-row"><span>PKG 1 + PKG 2 Simple (₱25,000)</span><span>₱25,000</span></div>
+      <div class="bp-row"><span>15% discount</span><span class="bp-disc">− ₱3,750</span></div>
+      <div class="bp-row tot"><span>You pay</span><span>₱21,250</span></div>
+      <div class="bp-row" style="margin-top:8px;"><span>PKG 1 + PKG 2 Moderate (₱43,000)</span><span>₱43,000</span></div>
+      <div class="bp-row"><span>15% discount</span><span class="bp-disc">− ₱6,450</span></div>
+      <div class="bp-row tot"><span>You pay</span><span>₱36,550</span></div>
+    </div>
+  </div>
+
+  <div class="bundle">
+    <span class="slot-ribbon">2 slots</span>
+    <div class="bun-head">
+      <div class="bun-badge-row"><span class="disc-badge db-navy">15% off</span><span style="font-size:11px;font-weight:700;color:#1B3A7A;">👥 Both clients</span></div>
+      <p class="bun-name">Referral Bundle</p>
+      <p class="bun-tagline">Refer a fellow business owner. Both of you get 15% off your packages.</p>
+    </div>
+    <div class="bun-body">
+      <ul class="bun-list">
+        <li><span class="ck-n">✓</span>Referrer + referred each get 15% off</li>
+        <li><span class="ck-n">✓</span>Each may be on a different package</li>
+        <li><span class="ck-n">✓</span>Referred must engage within 30 days</li>
+        <li><span class="ck-n">✓</span>Uses 2 of 5 launch slots — check availability</li>
+      </ul>
+    </div>
+    <div class="bun-pricing">
+      <div class="bp-row"><span>PKG 1 Simple</span><span class="bp-disc">→ ₱7,650 each</span></div>
+      <div class="bp-row"><span>PKG 2 Moderate</span><span class="bp-disc">→ ₱22,950 each</span></div>
+      <span class="bun-cond">⚠ Uses 2 slots — check availability first</span>
+    </div>
+  </div>
+
+  <div class="bundle">
+    <span class="slot-ribbon">1 slot</span>
+    <div class="bun-head">
+      <div class="bun-badge-row"><span class="disc-badge db-coral">20% off</span><span style="font-size:11px;font-weight:700;color:#712B13;">📅 Max discount</span></div>
+      <p class="bun-name">Multi-Year Deal</p>
+      <p class="bun-tagline">Cases spanning 2+ taxable years. Commit to the full engagement and get the maximum discount.</p>
+    </div>
+    <div class="bun-body">
+      <ul class="bun-list">
+        <li><span class="ck-n">✓</span>20% off total accumulated fee</li>
+        <li><span class="ck-n">✓</span>All open years covered in one engagement</li>
+        <li><span class="ck-n">✓</span>Can be combined with All-in Package</li>
+      </ul>
+    </div>
+    <div class="bun-pricing">
+      <div class="bp-row"><span>2 yrs PKG 1 Mod</span><span class="bp-disc">→ ₱19,200</span></div>
+      <div class="bp-row"><span>3 yrs PKG 1 Mod</span><span class="bp-disc">→ ₱25,600</span></div>
+      <div class="bp-row"><span>4 yrs PKG 1 Mod</span><span class="bp-disc">→ ₱32,000</span></div>
+      <span class="bun-cond">⚠ 5+ years: custom quote</span>
+    </div>
+  </div>
+
+  <div class="scarcity"><p>🔴 &nbsp;<strong>Only 5 slots in total.</strong> Referral Bundle uses 2 slots at once. A slot is reserved upon full payment only — inquiries do not reserve a slot.</p></div>
+</div>
+
+<hr class="div">
+
+<!-- HOW IT WORKS -->
+<div class="section light">
+  <p class="sec-label">How it works</p>
+  <div class="steps">
+    <div class="step sn"><p class="step-num">Step 01</p><p class="step-label">Send your COR</p><p class="step-detail">Share your BIR Form 2303 for a free initial assessment — no slot used yet</p></div>
+    <div class="step st"><p class="step-num">Step 02</p><p class="step-label">I assess &amp; quote</p><p class="step-detail">I confirm complexity, apply the right bundle, and present your final fee</p></div>
+    <div class="step sg"><p class="step-num">Step 03</p><p class="step-label">Pay in full &amp; engage</p><p class="step-detail">Full payment secures your slot and starts the engagement</p></div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- INLINE CTA -->
+<div class="section dark" style="padding:24px 16px;">
+  <div class="inline-cta">
+    <p class="inline-cta-title">Secure your slot now</p>
+    <p class="inline-cta-sub">Send your BIR Form 2303 for a free assessment. Full payment required to reserve your slot and lock in the launch rate.</p>
+    <div class="slot-counter">🔴 5 of 5 slots remaining</div>
+    <div class="cta-btn-stack">
+      <a class="cta-btn btn-t" href="mailto:hkbalingit.cpa@gmail.com?subject=BIR Penalty Relief Inquiry">✉ Penalty relief inquiry</a>
+      <a class="cta-btn btn-lt" href="mailto:hkbalingit.cpa@gmail.com?subject=Business Closure Inquiry">→ Business closure inquiry</a>
+      <a class="cta-btn btn-g" href="mailto:hkbalingit.cpa@gmail.com?subject=BIR Services General Inquiry">★ General inquiry</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTNOTE -->
+<div class="section muted">
+  <p class="footnote">
+    <span class="fn-b">Professional services.</span> Rendered by Kim Balingit, CPA — PRC-Licensed CPA and BIR-Accredited Tax Practitioner.<br><br>
+    <span class="fn-b">Launch fees.</span> Rates are exclusive to the first 5 businesses that engage and pay in full. I reserve the right to revert to standard rates once slots are taken or at any time without prior notice.<br><br>
+    <span class="fn-b">Included.</span> Transportation to RDO and notarial fees.<br><br>
+    <span class="fn-b">Not included.</span> BIR taxes, penalties, surcharges, and interest due remain the client's sole obligation payable directly to the BIR.<br><br>
+    <span class="fn-b">Payment.</span> Full payment required upon availment to reserve a slot. No work commences until payment is confirmed.<br><br>
+    <span class="fn-b">Abatement.</span> Subject to the sole discretion of the Commissioner of Internal Revenue. Basic tax due is not abatable.<br><br>
+    <span class="fn-b">Timelines.</span> The 3-working-day clearance is RMC 47-2026's target — not guaranteed. Actual processing depends on the RDO and document completeness.<br><br>
+    <span class="fn-b">Legal advice.</span> For compliance guidance only. For criminal exposure or large assessments, consult legal counsel.<br><br>
+    RR No. 4-2026 · RMC 47-2026 · NIRC Section 204(B)
+  </p>
+  <div class="tri-rule" style="margin-top:1.5rem;"><span class="tr-n"></span><span class="tr-t"></span><span class="tr-g"></span></div>
+</div>
+
+<!-- STICKY BOTTOM CTA -->
+<div class="sticky-cta">
+  <div class="sticky-slots">
+    <strong>🔴 5 slots left</strong>
+    Launch rate
+  </div>
+  <a class="sticky-btn" href="mailto:hkbalingit.cpa@gmail.com?subject=BIR Services Inquiry">Get free assessment →</a>
+</div>
+
+</body>
+</html>
